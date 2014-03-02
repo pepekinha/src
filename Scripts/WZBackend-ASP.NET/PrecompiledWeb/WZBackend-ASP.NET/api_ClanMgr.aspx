@@ -1,0 +1,1 @@
+﻿<%@ page language="C#" autoeventwireup="true" validaterequest="false" inherits="api_ClanMgr, App_Web_zqrrv6p6" %>

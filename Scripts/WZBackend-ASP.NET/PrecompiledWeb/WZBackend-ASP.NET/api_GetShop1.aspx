@@ -1,0 +1,1 @@
+﻿<%@ page language="C#" autoeventwireup="true" inherits="api_GetShop1, App_Web_zqrrv6p6" %>

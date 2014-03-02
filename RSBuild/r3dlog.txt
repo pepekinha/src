@@ -1,0 +1,10 @@
+--- Log started at Fri May 24 00:37:51 2013
+
+000000.000| r3dFile: can't open game.ini
+000000.049| Can't open file "game.ini"
+000000.051| r3dFile: can't open local.ini
+000000.051| Can't open file "local.ini"
+000000.052| cmd: 1
+000000.052| Loading config file build\RSBuild.xml
+000000.052|  !!! ERROR: can't open build\RSBuild.xml
+000000.053|  ... exiting
