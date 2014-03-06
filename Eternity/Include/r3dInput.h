@@ -296,10 +296,10 @@ public:
 		KS_SHOW_PLAYERS,
 
 		KS_TOGGLE_FLASHLIGHT, // ultraporing - flashlight key
-
+	
 		// don't forget to increment INPUT_MAPPING_FILE_VERSION after making any changes here
-
 		KS_NUM,
+
 	};
 
 	enum InputMapType

@@ -685,7 +685,7 @@ _KeyNames[] =
 	{kbsL                  , "L" },
 	{kbsSemiColon          , "SEMICOLON" },
 	{kbsApostrophe         , "APOSTROPHE" },
-	{kbsGrave		, "GRAVE" },
+	{kbsGrave			   , "GRAVE" },
 	{kbsLeftShift          , "LEFT SHIFT" },
 	{kbsBackSlash          , "BACKSLASH" },
 	{kbsZ                  , "Z" },
@@ -974,8 +974,7 @@ r3dInputMappingMngr::r3dInputMappingMngr()
 	m_Mapping[KS_ITEM2] =					KeyboardMapping(INPUTMAP_KEYBOARD, kbs4, "$HUD_Cntrl_Item2");
 	m_Mapping[KS_ITEM3] =					KeyboardMapping(INPUTMAP_KEYBOARD, kbs5, "$HUD_Cntrl_Item3");
 	m_Mapping[KS_ITEM4] =					KeyboardMapping(INPUTMAP_KEYBOARD, kbs6, "$HUD_Cntrl_Item4");
-	m_Mapping[KS_NEXTITEM] =			KeyboardMapping(INPUTMAP_KEYBOARD, kbsGrave, "$HUD_Cntrl_NextItem");
-
+	m_Mapping[KS_NEXTITEM] =				KeyboardMapping(INPUTMAP_KEYBOARD, kbsGrave, "$HUD_Cntrl_NextItem");
 	m_Mapping[KS_HOLD_BREATH] =				KeyboardMapping(INPUTMAP_KEYBOARD, kbsLeftShift, "$HUD_Cntrl_SteadyAim");
 
 	m_Mapping[KS_CHAT] =					KeyboardMapping(INPUTMAP_KEYBOARD, kbsEnter, "$HUD_Cntrl_Chat");
@@ -1002,7 +1001,6 @@ r3dInputMappingMngr::r3dInputMappingMngr()
 	m_Mapping[KS_SHOW_PLAYERS] =		KeyboardMapping(INPUTMAP_KEYBOARD, kbsTab, "$HUD_Cntrl_ShowPlayers");
 
 	m_Mapping[KS_TOGGLE_FLASHLIGHT] = KeyboardMapping(INPUTMAP_KEYBOARD, kbsF, "$HUD_Cntrl_ToggleFlashlight");
-
 
 }
 
@@ -1049,7 +1047,7 @@ bool r3dInputMappingMngr::wasReleased(KeybordShortcuts shortcut)
 	return false;
 }
 
-static const int INPUT_MAPPING_FILE_VERSION = 5;
+static const int INPUT_MAPPING_FILE_VERSION = 6; //era 5
 
 void r3dInputMappingMngr::saveMapping(const char* path)
 {

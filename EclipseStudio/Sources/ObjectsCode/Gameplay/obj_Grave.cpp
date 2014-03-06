@@ -30,7 +30,7 @@ BOOL obj_Grave::Load(const char *fname)
 BOOL obj_Grave::OnCreate()
 {
 	m_ActionUI_Title = gLangMngr.getString("GraveStone");
-	m_ActionUI_Msg = gLangMngr.getString("Hold E To Read GraveStone");
+	m_ActionUI_Msg = gLangMngr.getString("Hold U To Read GraveStone");
 
 	m_spawnPos = GetPosition();
 

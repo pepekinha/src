@@ -1340,4 +1340,24 @@ int CClientUserProfile::ApiConvertGCToGD(int currentvalue,int convertvalue)
 	return 0;
 }
 
+//Change name
+int CClientUserProfile::ApiChangeName(const char* Name)
+{
+    wiCharDataFull& w = ProfileData.ArmorySlots[SelectedCharID];
+
+
+
+
+    CWOBackendReq req(this, "api_ChangeName.aspx");
+    req.AddParam("CustomerID", CustomerID);
+    req.AddParam("Name", Name);
+    req.AddParam("CharID", w.LoadoutID);
+    if(!req.Issue())
+    {
+        return 50;
+    }
+    GetProfile();
+    return 0;
+}
+
 #endif // ! WO_SERVER

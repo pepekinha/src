@@ -356,6 +356,8 @@ class CClientUserProfile : public CUserProfile
 	int		ApiCharCreate(const char* Gamertag, int Hardcore, int HeroItemID, int HeadIdx, int BodyIdx, int LegsIdx);
 	int		ApiCharDelete();
 	int		ApiCharRevive();
+	int		ApiChangeName(const char* Name); //Change Name
+
 	int CClientUserProfile::ApiConvertGCToGD(int currentvalue,int convertvalue);
 
 	// client backpack APIs

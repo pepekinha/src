@@ -726,6 +726,7 @@ bool FrontendWarZ::Initialize()
 	gfxMovie.RegisterEventHandler("eventRequestGCTransactionData", MAKE_CALLBACK(eventRequestGCTransactionData));
 	gfxMovie.RegisterEventHandler("eventRentServerUpdatePrice", MAKE_CALLBACK(eventRentServerUpdatePrice));
 	gfxMovie.RegisterEventHandler("eventRentServer", MAKE_CALLBACK(eventRentServer));
+	gfxMovie.RegisterEventHandler("eventRenameCharacter", MAKE_CALLBACK(eventRenameCharacter)); //Change Name
 
 	gfxMovie.RegisterEventHandler("eventShowSurvivorsMap", MAKE_CALLBACK(eventShowSurvivorsMap));	
 	gfxMovie.RegisterEventHandler("eventStorePurchaseGDCallback", MAKE_CALLBACK(eventStorePurchaseGDCallback));
@@ -1431,8 +1432,13 @@ void FrontendWarZ::initFrontend()
 	gfxMovie.Invoke("_root.api.showSurvivorsScreen", "");
 
 	gfxMovie.Invoke("_root.api.setLanguage", g_user_language->GetString());
+	gfxMovie.SetVariable("_root.api.ChangeName_Price",1000); // 1000 is price //Change Name
 
-	InitButtons(); //
+	InitButtons();
+	
+	if (gUserProfile.ProfileData.AccountType = 5 )
+	gfxMovie.SetVariable("_root.api.Main.SurvivorsAnim.Survivors.PremiumAcc.visible", true);
+
 	// init clan icons
 	// important: DO NOT CHANGE THE ORDER OF ICONS!!! EVER!
 	{
@@ -1561,24 +1567,37 @@ void FrontendWarZ::initFrontend()
 		var3[2].SetBoolean(false);
 		gfxMovie.Invoke("_root.api.addRentServer_SlotsInfo", var3, 3);
 
-		//Scaleform::GFx::Value var[2];
+	}
+	{
+		Scaleform::GFx::Value var[3];
 		var[0].SetInt(0);
-		var[1].SetString("1");
-		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 2);
+		var[1].SetInt(0);
+		var[2].SetString("1");
+		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 3);
 
 		var[0].SetInt(1);
-		var[1].SetString("2");
-		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 2);
+		var[1].SetInt(1);
+		var[2].SetString("1");
+		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 3);
 
 		var[0].SetInt(2);
-		var[1].SetString("3");
-		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 2);
+		var[1].SetInt(2);
+		var[2].SetString("2");
+		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 3);
 
 		var[0].SetInt(3);
-		var[1].SetString("6");
-		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 2);
+		var[1].SetInt(3);
+		var[2].SetString("3");
+		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 3);
 
-		//Scaleform::GFx::Value var[2];
+		var[0].SetInt(4);
+		var[1].SetInt(4);
+		var[2].SetString("6");
+		gfxMovie.Invoke("_root.api.addRentServer_RentInfo", var, 3);
+
+	}
+	{
+		Scaleform::GFx::Value var[2];
 		var[0].SetInt(0);
 		var[1].SetString("NO");
 		gfxMovie.Invoke("_root.api.addRentServer_PVEInfo", var, 2);
@@ -1783,9 +1802,55 @@ unsigned int WINAPI FrontendWarZ::as_LearnSkilLThread(void* in_data)
 void FrontendWarZ::eventRentServer(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
 {
 	Scaleform::GFx::Value var[2];
-	var[0].SetString("Coming Soon");
+	var[0].SetString("Contact ViruZ Team");
 	var[1].SetBoolean(true);
 	gfxMovie.Invoke("_root.api.showInfoMsg", var, 2);
+}
+//Change Name
+void FrontendWarZ::eventRenameCharacter(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
+{
+//args[0].GetString();
+    Scaleform::GFx::Value var[2];
+    var[0].SetStringW(gLangMngr.getString("Please Wait..."));
+    var[1].SetBoolean(false);
+    gfxMovie.Invoke("_root.api.showInfoMsg", var, 2);
+
+    gUserProfile.GetProfile();
+    updateInventoryAndSkillItems();
+
+        char tmpGamertag[128];
+        if(gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].ClanID != 0)
+            sprintf(tmpGamertag, "[%s] %s", gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].ClanTag, gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].Gamertag);
+        else
+            r3dscpy(tmpGamertag, gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].Gamertag);
+
+
+		//const char* oldname = gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].Gamertag;
+        int apiCode = gUserProfile.ApiChangeName(args[0].GetString());
+        if(apiCode == 50){
+        gfxMovie.Invoke("_root.api.hideInfoMsg", "");
+		var[0].SetString("Change Name Failed");
+		var[1].SetBoolean(true);
+		gfxMovie.Invoke("_root.api.showInfoMsg", var, 2);
+        return;
+    }
+
+    var[0].SetString(tmpGamertag);
+    var[1].SetString(args[0].GetString());
+    gfxMovie.Invoke("_root.api.changeSurvivorName", var, 2);
+
+
+    gfxMovie.Invoke("_root.api.hideInfoMsg", "");
+
+
+    updateInventoryAndSkillItems();
+
+    Scaleform::GFx::Value vars[1];
+    vars[0].SetInt(gUserProfile.ProfileData.GamePoints);
+    gfxMovie.Invoke("_root.api.setGC", vars, 1);
+
+    /*var[0].SetInt(gUserProfile.ProfileData.GameDollars);
+    gfxMovie.Invoke("_root.api.setDollars", vars, 1);*/
 }
 
 void FrontendWarZ::eventRequestMyServerList(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
@@ -2800,21 +2865,21 @@ void FrontendWarZ::eventSetCurrentBrowseChannel(r3dScaleformMovie* pMovie, const
 }
 void FrontendWarZ::eventChangeOutfit(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
 {
-    r3d_assert(argCount == 4);
-    int headIdx = args[1].GetInt();
-    int bodyIdx = args[2].GetInt();
-    int legsIdx = args[3].GetInt();
+	r3d_assert(argCount == 4);
+	int headIdx = args[1].GetInt();
+	int bodyIdx = args[2].GetInt();
+	int legsIdx = args[3].GetInt();
 
 
-    gUserProfile.ApiChangeOutfit(headIdx, bodyIdx, legsIdx);
+	gUserProfile.ApiChangeOutfit(headIdx, bodyIdx, legsIdx);
 
 
-    gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].HeadIdx = headIdx;
-    gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].BodyIdx = bodyIdx;
-    gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].LegsIdx = legsIdx;
-    
-    m_Player->uberAnim_->anim.StopAll();
-    m_Player->UpdateLoadoutSlot(m_Player->CurLoadout);
+	gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].HeadIdx = headIdx;
+	gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].BodyIdx = bodyIdx;
+	gUserProfile.ProfileData.ArmorySlots[gUserProfile.SelectedCharID].LegsIdx = legsIdx;
+
+	m_Player->uberAnim_->anim.StopAll();
+	m_Player->UpdateLoadoutSlot(m_Player->CurLoadout);
 }
 
 void FrontendWarZ::eventCreateChangeCharacter(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
