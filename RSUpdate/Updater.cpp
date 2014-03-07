@@ -1080,11 +1080,13 @@ void CUpdater::LoginThreadEntry()
 		
 	int retB = GetVal(retA);
 
-	if(retB == 1){
-        loginErrMsg_ = "Conta banida permanente.";
-		MessageBox(NULL, gLauncherConfig.accountBannedMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
-		return;
-	}
+	 if(retB == 1){
+        loginErrMsg_ = "Conta banida permanente por Hardware ID.";
+        MessageBox(NULL, gLauncherConfig.accountBannedHwidMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
+        Sleep(100);
+        ExitProcess(0);
+        return;
+    }
 
     switch(gUserProfile.loginAnswerCode) 
     {
@@ -1126,9 +1128,9 @@ void CUpdater::LoginThreadEntry()
         break;
 
       case CLoginHelper::ANS_HardwareIDBanned:
-		SetVal(retA, 1);
-        loginErrMsg_ = "Conta banida permanent HardwareID.";
-		MessageBox(NULL, gLauncherConfig.accountBannedMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
+        SetVal(retA, 1);
+        loginErrMsg_ = "Conta banida permanente HardwareID.";
+        MessageBox(NULL, gLauncherConfig.accountBannedHwidMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
         break;
         
       case CLoginHelper::ANS_TimeExpired:

@@ -7,16 +7,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Configuration;
 
 public partial class api_SrvSkills : WOApiWebPage
 {
-    void AddSkill()
+    void OutfitOp( string CharID,string SkillID)
     {
+
         SqlCommand sqcmd = new SqlCommand();
         sqcmd.CommandType = CommandType.StoredProcedure;
         sqcmd.CommandText = "WZ_SRV_SkillAddNew";
-        sqcmd.Parameters.AddWithValue("@in_CharID", web.Param("CharID"));
-        sqcmd.Parameters.AddWithValue("@in_SkillID", web.Param("SkillID"));
+        sqcmd.Parameters.AddWithValue("@in_CharID", CharID);
+        sqcmd.Parameters.AddWithValue("@in_SkillID", SkillID);
 
         if (!CallWOApi(sqcmd))
             return;
@@ -26,12 +28,13 @@ public partial class api_SrvSkills : WOApiWebPage
 
     protected override void Execute()
     {
-        string func = web.Param("func");
-        if (func == "add")
-            AddSkill();
-        else
-            throw new ApiExitException("bad func");
+        if (!WoCheckLoginSession())
+            return;
+
+//         string func = web.Param("func");
+       string SkillID = web.Param("SkillID");
+        string CharID = web.Param("CharID");
+
+        OutfitOp(CharID,SkillID);
     }
-
-
 }

@@ -20,6 +20,7 @@ public:
 	std::string accountUnknownStatusMessage;
 	std::string accountDeletedMessage;
 	std::string accountBannedMessage;
+	std::string accountBannedHwidMessage;
 	std::string accountFrozenMessage;
 
 	std::string accountCreateFailedMessage;

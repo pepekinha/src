@@ -34,6 +34,8 @@ CLauncherConfig::CLauncherConfig()
 		"Your account was deleted because your payment was refunded or cancelled\n\nPlease contact your payment provider");
 	accountBannedMessage = r3dReadCFG_S(configFile, group, "accountBannedMessage",
 		"Your account has been permanently banned");
+	accountBannedHwidMessage = r3dReadCFG_S(configFile, group, "accountBannedHwidMessage",
+        "Your account has been permanently Hardware ID banned");
 	accountFrozenMessage = r3dReadCFG_S(configFile, group, "accountFrozenMessage",
 		"Your account has been temporarily frozen because of violation of the Terms of Service ( Paragraph 2 )\n\nYou will be able to continue to use the service in %d hours");
   

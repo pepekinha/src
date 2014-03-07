@@ -1436,9 +1436,12 @@ void FrontendWarZ::initFrontend()
 
 	InitButtons();
 	
-	if (gUserProfile.ProfileData.AccountType = 5 )
+	if(gUserProfile.ProfileData.AccountType == 5 )
+	{
 	gfxMovie.SetVariable("_root.api.Main.SurvivorsAnim.Survivors.PremiumAcc.visible", true);
-
+	}else{
+	gfxMovie.SetVariable("_root.api.Main.SurvivorsAnim.Survivors.BtnUpgtrial.visible", true);
+	}
 	// init clan icons
 	// important: DO NOT CHANGE THE ORDER OF ICONS!!! EVER!
 	{

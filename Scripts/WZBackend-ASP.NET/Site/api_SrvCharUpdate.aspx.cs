@@ -39,8 +39,10 @@ public partial class api_SrvCharUpdate : WOApiWebPage
         sqcmd.Parameters.AddWithValue("@in_Stat03", web.Param("ts03"));
         sqcmd.Parameters.AddWithValue("@in_Stat04", web.Param("ts04"));
         sqcmd.Parameters.AddWithValue("@in_Stat05", web.Param("ts05"));
-
-        //skills
+		
+		sqcmd.Parameters.AddWithValue("@in_GroupID", web.Param("GroupID"));
+        
+		//skills
         sqcmd.Parameters.AddWithValue("@in_SkillID0", web.Param("SkillID0"));
         sqcmd.Parameters.AddWithValue("@in_SkillID1", web.Param("SkillID1"));
         sqcmd.Parameters.AddWithValue("@in_SkillID2", web.Param("SkillID2"));

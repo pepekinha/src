@@ -7,17 +7,21 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Configuration;
 
 public partial class api_CharOutfit : WOApiWebPage
 {
     void OutfitOp(string CustomerID, string CharID, int HeadIdx, int BodyIdx, int LegsIdx)
     {
+        if (HeadIdx < 0 || BodyIdx < 0 || LegsIdx < 0 || HeadIdx > 4 || BodyIdx > 4 || LegsIdx > 4)
+            return;
 
         SqlCommand sqcmd = new SqlCommand();
         sqcmd.CommandType = CommandType.StoredProcedure;
-        sqcmd.CommandText = "WZ_CharChangeOutfit";
-
+        sqcmd.Parameters.AddWithValue("@in_CustomerID", CustomerID);
         sqcmd.Parameters.AddWithValue("@in_CharID", CharID);
+
+        sqcmd.CommandText = "WZ_CharChangeOutfit";
         sqcmd.Parameters.AddWithValue("@in_HeadIdx", HeadIdx);
         sqcmd.Parameters.AddWithValue("@in_BodyIdx", BodyIdx);
         sqcmd.Parameters.AddWithValue("@in_LegsIdx", LegsIdx);
