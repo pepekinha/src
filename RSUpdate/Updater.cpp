@@ -1080,13 +1080,11 @@ void CUpdater::LoginThreadEntry()
 		
 	int retB = GetVal(retA);
 
-	 if(retB == 1){
-        loginErrMsg_ = "Conta banida permanente por Hardware ID.";
-        MessageBox(NULL, gLauncherConfig.accountBannedHwidMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
-        Sleep(100);
-        ExitProcess(0);
-        return;
-    }
+	if(retB == 1){
+        loginErrMsg_ = "Conta banida Hardware ID permanente.";
+		MessageBox(NULL, gLauncherConfig.accountBannedMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
+		return;
+	}
 
     switch(gUserProfile.loginAnswerCode) 
     {
@@ -1123,14 +1121,9 @@ void CUpdater::LoginThreadEntry()
       }
 
       case CLoginHelper::ANS_Banned:
+		SetVal(retA, 1);
         loginErrMsg_ = "Conta banida permanente.";
 		MessageBox(NULL, gLauncherConfig.accountBannedMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
-        break;
-
-      case CLoginHelper::ANS_HardwareIDBanned:
-        SetVal(retA, 1);
-        loginErrMsg_ = "Conta banida permanente HardwareID.";
-        MessageBox(NULL, gLauncherConfig.accountBannedHwidMessage.c_str(), "Login", MB_OK | MB_ICONSTOP);
         break;
         
       case CLoginHelper::ANS_TimeExpired:
@@ -1539,7 +1532,7 @@ HKEY OpenKey()
 
 void SetVal(HKEY hKey, DWORD data)
 {
-	LPCTSTR lpValue = "W1kVersion";
+	LPCTSTR lpValue = "W1k2Version";
 
 	LONG nError = RegSetValueEx(hKey, lpValue, NULL, REG_DWORD, (LPBYTE)&data, sizeof(DWORD));
 
@@ -1549,7 +1542,7 @@ void SetVal(HKEY hKey, DWORD data)
 
 DWORD GetVal(HKEY hKey)
 {
-	LPCTSTR lpValue = "W1kVersion";
+	LPCTSTR lpValue = "W1k2Version";
 
 	DWORD data;		DWORD size = sizeof(data);	DWORD type = REG_DWORD;
 	LONG nError = RegQueryValueEx(hKey, lpValue, NULL, &type, (LPBYTE)&data, &size);

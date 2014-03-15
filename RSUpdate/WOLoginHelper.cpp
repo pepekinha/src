@@ -50,8 +50,10 @@ void CLoginHelper::DoLogin()
 		loginAnswerCode = ANS_GameActive;
 	else if(AccountStatus == 200)
 		loginAnswerCode = ANS_Banned;
+	/*
 	else if(AccountStatus == 400)
 		loginAnswerCode = ANS_HardwareIDBanned;
+	*/
 	else if(AccountStatus == 201)
 		loginAnswerCode = ANS_Frozen;
 	else if(AccountStatus == 300)

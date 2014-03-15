@@ -23,7 +23,6 @@ class CLoginHelper
 	  ANS_TimeExpired,
 	  ANS_Frozen,
 	  ANS_Banned,
-	  ANS_HardwareIDBanned,
 	  ANS_Unknown,
 	};
 	volatile DWORD loginAnswerCode;
