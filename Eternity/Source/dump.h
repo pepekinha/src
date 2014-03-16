@@ -3,9 +3,9 @@
 
 
 
-#define MAX_DUMP_OFFSETS 65 // << Atualizar Quantidade de Hacks
+#define MAX_DUMP_OFFSETS 67 // << Atualizar Quantidade de Hacks
 #define MAX_DUMP_SIZE 16      // << Quantidade de Hex contados
-#define MAX_PROCESS_DUMP 65  // << Atualizar Quantidade de Hacks
+#define MAX_PROCESS_DUMP 67  // << Atualizar Quantidade de Hacks
 
 typedef struct ANITHACK_PROCDUMP {
 	unsigned int m_aOffset;

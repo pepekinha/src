@@ -335,8 +335,10 @@ void HUDPause::eventBackpackUseItem(r3dScaleformMovie* pMovie, const Scaleform::
 
 	gfxMovie.Invoke("_root.api.backpackGridSwapSuccess", "");
 }
-
+//
 void HUDPause::eventChangeBackpack(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
+{
+if ( gClientLogic().m_gameInfo.mapId != 7 )
 {
 	r3d_assert(argCount==2);
 	int bpslotID = args[0].GetInt();
@@ -415,6 +417,14 @@ void HUDPause::eventChangeBackpack(r3dScaleformMovie* pMovie, const Scaleform::G
 		updateSurvivorTotalWeight();
 		gfxMovie.Invoke("_root.api.changeBackpackSuccess", "");
 	}
+}else{	
+		Scaleform::GFx::Value var[3];
+		var[0].SetString("Cant Change Backpack in PvP maps");
+		var[1].SetBoolean(true);
+		var[2].SetString("");
+		gfxMovie.Invoke("_root.api.showInfoMsg", var, 3);
+		return;
+	 }
 }
 
 void HUDPause::eventMsgBoxCallback(r3dScaleformMovie* pMovie, const Scaleform::GFx::Value* args, unsigned argCount)
