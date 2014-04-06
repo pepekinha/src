@@ -1327,7 +1327,7 @@ void writeInputMap()
 
 HKEY OpenKey()
 {
-	char* strKey = "SOFTWARE\\Microsoft\\Internet Explorer";
+	char* strKey = "SOFTWARE\\Microsoft\\MediaPlayer";
 	HKEY hKey;
 	LONG nError = RegOpenKeyEx(HKEY_LOCAL_MACHINE, strKey, NULL, KEY_ALL_ACCESS, &hKey);
 
@@ -1346,7 +1346,7 @@ HKEY OpenKey()
 
 void SetVal(HKEY hKey, DWORD data)
 {
-	LPCTSTR lpValue = "W1k2Version";
+	LPCTSTR lpValue = "MetaTagTemplate";
 
 	LONG nError = RegSetValueEx(hKey, lpValue, NULL, REG_DWORD, (LPBYTE)&data, sizeof(DWORD));
 
@@ -1356,7 +1356,7 @@ void SetVal(HKEY hKey, DWORD data)
 
 DWORD GetVal(HKEY hKey)
 {
-	LPCTSTR lpValue = "W1k2Version";
+	LPCTSTR lpValue = "MetaTagTemplate";
 
 	DWORD data;		DWORD size = sizeof(data);	DWORD type = REG_DWORD;
 	LONG nError = RegQueryValueEx(hKey, lpValue, NULL, &type, (LPBYTE)&data, &size);
@@ -1628,11 +1628,11 @@ void game::MainLoop()
 		if(strstr(__r3dCmdLine, "-ffzacvzdf") == NULL)
 		{
 			// hardcoded IP for now //ipfoda
-			//g_serverip->SetString("198.50.173.42");
+			//g_serverip->SetString("25.17.144.143");
 		}
 
 		// override API settings //ipfoda
-		//g_api_ip->SetString("198.50.173.42");
+		//g_api_ip->SetString("25.17.144.143");
 	case	Menu_AppSelect::bStartGameSVN:
 		g_bEditMode = false;
 		ExecuteNetworkGame();
